@@ -1,0 +1,53 @@
+/*
+ * Módulo do líder: o que é só do admin, na aba Produtividade — as sub-abas (Closers | Líderes | Atividades dos líderes), os cartões por
+ * equipe da seção Líderes e a tabela da sub-aba Atividades. Os componentes vêm de componentes.css e as cores de tokens.css.
+ */
+/* sub-abas da Produtividade */
+.ld-subtabs { display: flex; flex-wrap: wrap; gap: var(--ld-s2); margin: 0 0 var(--ld-s4); padding-bottom: var(--ld-s3); border-bottom: 1px solid var(--ld-stroke); }
+.ld-subtabs button { padding: 10px 18px; border-radius: 99px; border: 1px solid var(--ld-stroke); background: transparent; color: var(--ld-muted); font-weight: 700; font-size: var(--ld-fs-md); line-height: 1; font-family: inherit; cursor: pointer; transition: background .16s, color .16s, border-color .16s; }
+.ld-subtabs button:hover { color: var(--ld-text); border-color: var(--ld-stroke-hi); }
+.ld-subtabs button[aria-selected="true"] { background: rgba(212, 175, 55, .14); border-color: var(--ld-stroke-hi); color: var(--ld-gold); }
+.ld-subpanel[hidden] { display: none !important; }
+.pr-filters.ld-sem-closer #prCl, .pr-filters.ld-sem-closer .fg:has(#prCl) { display: none; }
+
+/* cabeçalho de seção */
+.ld-sec-h { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin: 0 0 6px; }
+.ld-sec-h h2 { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px; color: var(--ld-gold); }
+.ld-sec-h span { font-size: var(--ld-fs-sm); color: var(--ld-muted); }
+.ld-sec > p { margin: 0 0 14px; font-size: var(--ld-fs-sm); color: var(--ld-muted); }
+
+/* seção Líderes: um cartão por equipe */
+.ld-teams { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--ld-s4); }
+@media (min-width: 860px) { .ld-teams { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1500px) { .ld-teams { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.ld-team { display: flex; flex-direction: column; gap: 14px; padding: 18px; border-radius: 16px; border: 1px solid var(--ld-stroke); background: var(--ld-panel); border-top: 3px solid var(--tc, var(--ld-gold)); min-width: 0; }
+.ld-team-h { display: flex; align-items: center; gap: var(--ld-s3); min-width: 0; }
+.ld-team-h .ld-av { flex-basis: 42px; width: 42px; height: 42px; font-size: 14px; }
+.ld-team-h h3 { font-size: var(--ld-fs-lg); font-weight: 800; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; }
+.ld-team-h p { font-size: var(--ld-fs-sm); color: var(--ld-muted); }
+.ld-team-h p b { color: var(--ld-text); }
+.ld-team.sem-lider .ld-team-h p b { color: var(--ld-muted); font-weight: 500; }
+.ld-mini { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--ld-s2); }
+.ld-mini > div { padding: 9px 8px; border-radius: var(--ld-r1); background: rgba(255, 255, 255, .04); text-align: center; min-width: 0; }
+.ld-mini small { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: var(--ld-muted); }
+.ld-mini b { display: block; font-size: 20px; font-weight: 900; font-variant-numeric: tabular-nums; }
+.ld-best { font-size: var(--ld-fs-sm); color: var(--ld-muted); line-height: 1.6; }
+.ld-best b { color: var(--ld-text); }
+
+/* sub-aba Atividades dos líderes */
+.ld-ativ-tbl td.alerta { white-space: normal; max-width: 220px; }
+.ld-ativ-tbl .multi { display: block; font-size: var(--ld-fs-xs); color: var(--ld-muted); }
+.ld-ativ-tbl td.num b { font-weight: 800; }
+.ld-det-l { display: flex; flex-direction: column; gap: var(--ld-s2); list-style: none; margin: 0; padding: 0; }
+.ld-det-l li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 12px; padding: 10px 12px; border: 1px solid var(--ld-stroke); border-radius: var(--ld-r1); background: var(--ld-surface); }
+.ld-det-l time { grid-row: span 2; font-size: var(--ld-fs-xs); color: var(--ld-muted); font-variant-numeric: tabular-nums; text-align: right; }
+.ld-det-l b { font-size: var(--ld-fs-md); }
+.ld-det-l span { font-size: var(--ld-fs-sm); color: var(--ld-muted); overflow-wrap: anywhere; }
+.ld-det-t { display: inline-block; margin-right: 6px; font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .4px; color: var(--ld-gold); }
+@media (max-width: 640px) {
+  .ld-mini { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ld-meta-r { grid-template-columns: 54px minmax(0, 1fr) auto; }
+}
+
+/* os painéis das sub-abas herdam o espaçamento vertical da aba (o contêiner .pr-wrap do admin usa coluna com 22px) */
+.ld-subpanel { display: flex; flex-direction: column; gap: 22px; min-width: 0; }

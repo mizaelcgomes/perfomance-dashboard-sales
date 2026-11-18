@@ -1,0 +1,50 @@
+/*
+ * Módulo do líder: tokens de design (uma fonte só para cores, espaços, raios e tipografia). Todas as telas do módulo (portal do closer e
+ * admin) ficam dentro de um elemento com a classe "ld" e herdam daqui. As cores de cada página (--gold2, --panel, --stroke, --muted,
+ * --text) são usadas quando existem e, quando não, vale o mesmo tema dourado: o módulo não depende de nenhuma delas.
+ */
+.ld {
+  /* cores */
+  --ld-gold: var(--gold2, #fbbf24);
+  --ld-panel: var(--panel, #131313);
+  --ld-stroke: var(--stroke, rgba(212, 175, 55, .2));
+  --ld-stroke-hi: var(--stroke-hi, rgba(212, 175, 55, .5));
+  --ld-muted: var(--muted, rgba(255, 255, 255, .62));   /* 4,5:1 ou mais sobre o fundo escuro */
+  --ld-text: var(--text, #f3f3f3);
+  --ld-solid: #141414;                                   /* fundo OPACO de modais e drawers (a cor do painel do admin é translúcida) */
+  --ld-surface: rgba(255, 255, 255, .03);
+  --ld-surface-2: rgba(255, 255, 255, .06);
+  --ld-field: rgba(26, 26, 26, .95);
+  --ld-ok: #34d399;
+  --ld-bad: #ff8a80;
+  --ld-warn: #fbbf24;
+  --ld-lig: #60a5fa;
+  --ld-fu: #a78bfa;
+  --ld-lq: #fb923c;
+  --ld-ct: #34d399;
+  --ld-on-gold: #1a1200;                                 /* texto sobre o dourado */
+  --ld-gold-grad: linear-gradient(135deg, #d4af37, #fbbf24);
+
+  /* espaços, raios e tipografia */
+  --ld-s1: 4px;
+  --ld-s2: 8px;
+  --ld-s3: 12px;
+  --ld-s4: 16px;
+  --ld-s5: 24px;
+  --ld-r1: 10px;
+  --ld-r2: 14px;
+  --ld-r3: 18px;
+  --ld-fs-xs: 11px;
+  --ld-fs-sm: 12px;
+  --ld-fs-md: 13px;
+  --ld-fs-lg: 15px;
+  --ld-touch: 44px;                                      /* alvo de toque mínimo no celular */
+  --ld-ease: cubic-bezier(.2, .8, .2, 1);
+
+  color: var(--ld-text);
+  min-width: 0;
+}
+.ld *, .ld *::before, .ld *::after { box-sizing: border-box; }
+.ld[hidden], .ld [hidden] { display: none !important; }
+.ld :focus-visible { outline: 2px solid var(--ld-gold); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .ld *, .ld *::before, .ld *::after { transition: none !important; animation: none !important; } }

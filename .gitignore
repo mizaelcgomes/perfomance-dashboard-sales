@@ -1,0 +1,23 @@
+# Segredos: nunca versionar
+config.secrets.php
+config/local.php
+
+# Gerados em execução
+/public/uploads/*
+!/public/uploads/.htaccess
+/public/music/bg/
+/public/music/ceremony/
+/storage/logs/*
+/storage/rate-limit/*
+/storage/cache/*
+!/storage/*/.gitkeep
+error_log
+*.zip
+node_modules/
+tests/golden/snapshots*/
+
+# Editor/OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

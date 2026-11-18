@@ -1,0 +1,36 @@
+# Sistema MVC (fase 9). Vale para a pasta do site, onde ficam o index.php e a pasta nucleo/.
+# Arquivo completo: substitui o .htaccess da pasta do site. A versão do PHP é definida no cPanel (MultiPHP Manager), não aqui.
+Options -Indexes
+DirectoryIndex index.php
+
+# Só o index.php pode executar PHP aqui dentro
+<FilesMatch "^(?!index\.php$).*\.php$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order deny,allow
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Arquivos ocultos (.git, .env, ...) nunca são servidos
+<FilesMatch "^\.(?!htaccess$)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order deny,allow
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Toda URL que não for um arquivo ou pasta existente vai para o front controller
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # O núcleo (código, storage/, config.secrets.php) nunca é servido: segunda barreira, além do nucleo/.htaccess
+    RewriteRule ^nucleo(/|$) - [F,L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [L]
+</IfModule>

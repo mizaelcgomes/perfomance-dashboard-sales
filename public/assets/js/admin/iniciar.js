@@ -1,0 +1,9 @@
+shellInit();
+fetchData().then(()=>{loadPropagandas();loadRotation();loadBgMusic();});
+pnInit();
+msInit();
+tmInitEvents();
+loadDeletedClosers();
+loadSuspendedClosers();
+tmLoadOverview();
+tmLoadAcessos();

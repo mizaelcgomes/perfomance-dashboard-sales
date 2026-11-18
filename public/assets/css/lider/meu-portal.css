@@ -1,0 +1,99 @@
+/*
+ * Portal do Líder (lider.php), blocos "MEU PORTAL (CLOSER)": Meu dia (resumo do dia, últimas ações, minha evolução e meus feedbacks) e Meus
+ * contratos (semana/mês, indicadores, gráfico e benefícios fechados). Os blocos são os do portal do closer (closer.php) vestidos com o tema do
+ * shell do admin: as medidas e as cores de cada tipo de ação (ligação, follow-up, lead quente) são as mesmas. Os cartões usam .lp-card.
+ */
+
+/* ── grades ── */
+.lp-g-md { grid-template-columns: minmax(0, 1.4fr) minmax(300px, 1fr); align-items: start; }
+.lp-g-ct { grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr); align-items: start; }
+@media (max-width: 1180px) { .lp-g-md, .lp-g-ct { grid-template-columns: minmax(0, 1fr); } }
+
+/* ── resumo do dia ── */
+.mp-sum { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.mp-sum-c { position: relative; padding: 18px 18px 16px; border-radius: 16px; border: 1px solid var(--stroke); background: var(--panel); overflow: hidden; }
+.mp-sum-c::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: var(--c); opacity: .9; }
+.mp-sum-l { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); }
+.mp-sum-l svg { width: 18px; height: 18px; color: var(--c); }
+.mp-sum-n { margin-top: 8px; font-size: 52px; font-weight: 900; line-height: 1; letter-spacing: -1px; font-variant-numeric: tabular-nums; }
+.mp-sum-c.bump .mp-sum-n { animation: mpBump .45s var(--ease); }
+@keyframes mpBump { 40% { transform: scale(1.14); color: var(--c); } }
+
+/* ── ações (cada linha abre a edição: no Meu dia e no histórico de Registros) ── */
+.mp-rec { display: flex; flex-direction: column; gap: 8px; }
+.lp-ac[data-id] { cursor: pointer; transition: border-color .16s ease, background .16s ease; }
+.lp-ac[data-id]:hover { border-color: var(--stroke-hi); background: rgba(212, 175, 55, .06); }
+.lp-ac[data-id]:focus-visible { outline: 2px solid rgba(244, 215, 122, .6); outline-offset: 2px; }
+
+/* ── minha evolução ── */
+.mp-ev-txt { margin: 0 0 12px; font-size: 14px; line-height: 1.55; color: rgba(255, 255, 255, .8); }
+.mp-ev-txt b { color: #fff; font-weight: 800; }
+.mp-trend { display: inline-flex; align-items: center; gap: 4px; margin-left: 6px; padding: 1px 9px; border-radius: 99px; font-size: 12px; font-weight: 800; }
+.mp-trend.up { color: var(--ok); background: rgba(52, 211, 153, .14); }
+.mp-trend.down { color: var(--bad); background: rgba(239, 83, 80, .14); }
+.mp-trend.flat { color: var(--muted); background: var(--faint); }
+.mp-svg { width: 100%; height: auto; display: block; overflow: visible; }
+.mp-svg text { font-family: 'Inter', sans-serif; }
+
+/* ── meus feedbacks ── */
+.lp-badge { display: inline-block; margin-left: 8px; padding: 1px 9px; border-radius: 99px; background: var(--ld-gold-grad, linear-gradient(135deg, #d4af37, #fbbf24)); color: #1a1200; font-size: 11px; font-weight: 800; letter-spacing: 0; text-transform: none; vertical-align: middle; }
+.mp-fb { display: grid; gap: 10px; }
+
+/* ── meus contratos ── */
+.mp-ct-nav { margin-bottom: 14px; }
+.mp-ct-mes { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px; border: 1px solid var(--stroke); border-radius: 12px; background: rgba(255, 255, 255, .03); }
+.mp-ct-mes button { width: 38px; height: 34px; border: 0; border-radius: 9px; background: transparent; color: var(--gold2); font-size: 22px; line-height: 1; font-weight: 700; cursor: pointer; }
+.mp-ct-mes button:hover:not(:disabled) { background: rgba(212, 175, 55, .12); }
+.mp-ct-mes button:disabled { opacity: .28; cursor: not-allowed; }
+.mp-ct-mes b { font-size: 14px; font-weight: 800; text-align: center; }
+.mp-ct-sems { display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 8px; margin-top: 10px; }
+.mp-ct-sems[hidden] { display: none; }
+.mp-ct-sems button { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--stroke); background: transparent; color: var(--text); text-align: left; font-size: 13px; font-weight: 800; cursor: pointer; transition: .16s ease; }
+.mp-ct-sems button small { font-size: 11px; font-weight: 500; color: var(--muted); }
+.mp-ct-sems button:hover:not(:disabled) { border-color: var(--stroke-hi); background: rgba(212, 175, 55, .08); }
+.mp-ct-sems button.active { border-color: transparent; background: linear-gradient(135deg, #d4af37, #fbbf24); color: #1a1200; }
+.mp-ct-sems button.active small { color: rgba(26, 18, 0, .72); }
+.mp-ct-sems button:disabled { opacity: .35; cursor: not-allowed; }
+.mp-ct-cap { margin: 0 0 10px; font-size: 12px; color: var(--muted); }
+.mp-ct-cap b { color: var(--text); font-weight: 700; }
+.mp-ct-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 16px; }
+.mp-k { padding: 10px; border-radius: 12px; border: 1px solid var(--stroke); background: rgba(255, 255, 255, .03); min-width: 0; }
+.mp-k small { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
+.mp-k b { display: block; margin-top: 3px; font-size: 22px; font-weight: 900; line-height: 1.1; letter-spacing: -.5px; font-variant-numeric: tabular-nums; }
+.mp-k b span { display: block; margin: 2px 0 0; font-size: 12px; font-weight: 600; letter-spacing: 0; color: var(--muted); }
+.mp-k-d { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.mp-k-d .mp-trend { margin: 0; font-size: 11px; }
+.mp-k-p { font-size: 11px; color: var(--muted); }
+.mp-ct-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.mp-ct-chart svg text { font-family: 'Inter', sans-serif; }
+.mp-empty { padding: 34px 16px; text-align: center; color: var(--muted); font-size: 14px; border: 1px dashed var(--stroke); border-radius: 14px; background: rgba(212, 175, 55, .03); }
+.mp-empty b { display: block; margin-bottom: 8px; }
+.mp-empty svg { width: 34px; height: 34px; margin: 0 auto; color: var(--gold2); opacity: .75; }
+.mp-stack { display: flex; height: 10px; border-radius: 99px; overflow: hidden; background: var(--faint); margin-bottom: 4px; }
+.mp-stack i { display: block; height: 100%; min-width: 3px; }
+.mp-row { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto 54px; gap: 10px; align-items: center; padding: 10px 2px; border-bottom: 1px solid var(--faint); }
+.mp-row > i { width: 12px; height: 12px; border-radius: 4px; background: var(--bc); }
+.mp-row > i.mp-ic { display: inline-flex; width: 18px; height: 18px; border-radius: 0; background: none; color: var(--bc); }
+.mp-row > span { min-width: 0; overflow-wrap: anywhere; font-size: 14px; font-weight: 600; line-height: 1.25; }
+.mp-row > b { font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.mp-row > em { font-style: normal; font-size: 12px; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+.mp-row.none > span { color: var(--muted); font-weight: 500; }
+
+@media (max-width: 640px) {
+  .mp-sum { gap: 8px; }
+  .mp-sum-c { padding: 12px 10px; }
+  .mp-sum-l { font-size: 10px; gap: 5px; }
+  .mp-sum-l svg { width: 15px; height: 15px; }
+  .mp-sum-n { font-size: 36px; }
+}
+
+/* histórico completo das ações (abre dentro do Meu dia) */
+.mp-hist { margin-top: 20px; }
+.mp-hist[hidden] { display: none; }
+/* painel do closer (Equipe › Ver histórico): seletor de período e blocos */
+.cd-per { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin: 16px 0 10px; }
+.cd-per h3 { margin: 0; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px; color: var(--gold2); }
+.cd-bloco { margin-bottom: 18px; }
+.cd-bloco > h4 { margin: 0 0 8px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
+.cd-cap { margin: 0 0 10px; font-size: 12px; color: var(--muted); }
+.cd-cap b { color: var(--text); font-weight: 700; }

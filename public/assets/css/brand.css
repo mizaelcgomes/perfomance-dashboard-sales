@@ -1,0 +1,5 @@
+/* brand.css — logo do TOP CLOSERS nas telas de login e cadastro (ver brand.php) */
+.brand{display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 18px;}
+.brand-name{font-family:'Cinzel',serif;font-weight:900;font-size:24px;line-height:1.1;letter-spacing:4px;text-transform:uppercase;text-align:center;white-space:nowrap;color:#d4af37;background:linear-gradient(90deg,#b8960c,#d4af37,#e8c84a,#d4af37,#b8960c);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.brand-img{display:block;width:auto;height:auto;max-width:220px;max-height:96px;object-fit:contain;}
+@media(max-width:480px){.brand-name{font-size:20px;letter-spacing:3px;}}

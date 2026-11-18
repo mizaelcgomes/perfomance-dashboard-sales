@@ -1,0 +1,8 @@
+# Código e configuração nunca são servidos pelo navegador (defesa extra: o ideal é esta pasta ficar fora do public_html).
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order deny,allow
+    Deny from all
+</IfModule>

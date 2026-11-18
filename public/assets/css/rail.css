@@ -1,0 +1,110 @@
+/*
+ * rail.css — a barra lateral "flutuante" (cartão arredondado, itens em pílula, rótulos de grupo em etiqueta, submenu com a linha vertical, recolhida com
+ * balão/flutuante ao passar o mouse) e a barra superior com o cartão "sino + perfil" (perfil, configurações e sair). Vale para o admin (admin.php),
+ * o portal do líder e o portal do closer: os seletores cobrem os dois nomes de cada peça (.sidebar/.lp-side, .tab-btn/.lp-nav-b, .app-shell/.lp-shell,
+ * .topbar/.lp-top). É carregado DEPOIS do shell-admin.css; o admin.php tem uma cópia idêntica deste arquivo dentro do <style> (ele não carrega CSS de fora).
+ * Se mudar aqui, mude lá (procure "rail.css" no admin.php).
+ */
+.app-shell, .lp-shell { --rail-bg: rgba(17, 17, 17, .96); --rail-hi: var(--gold2, var(--gr-strong, #f4d77a)); }
+
+/* ── a barra lateral: um cartão que flutua ── */
+.sidebar, .lp-side {
+  top: 12px; margin: 12px 0 12px 12px; width: var(--sb-w);
+  height: calc(100vh - 24px); height: calc(100dvh - 24px);
+  border: 1px solid var(--stroke); border-radius: 22px; background: var(--rail-bg);
+  box-shadow: 0 14px 44px rgba(0, 0, 0, .38);
+}
+.sidebar .sb-top, .lp-side .sb-top { height: auto; padding: 20px 18px 10px; border-bottom: 0; }
+.sidebar .sb-nav, .lp-side .lp-nav { padding: 6px 12px; gap: 3px; }
+.sb-group { align-self: flex-start; margin: 16px 2px 5px; padding: 3px 10px; border-radius: 8px; background: rgba(255, 255, 255, .07); color: var(--muted); font-size: 10.5px; font-weight: 700; letter-spacing: .6px; }
+.sb-group:first-child { margin-top: 4px; padding: 3px 10px; }
+.tab-btn, .lp-nav-b { height: 42px; padding: 0 12px; border-radius: 12px; font-size: 13.5px; }
+.tab-btn.active::before, .lp-nav-b[aria-current="page"]::before { display: none; }
+.tab-btn:hover, .lp-nav-b:hover { background: rgba(255, 255, 255, .06); }
+.tab-btn.active, .lp-nav-b[aria-current="page"] { background: rgba(212, 175, 55, .17); color: var(--rail-hi); }
+.sb-foot { padding: 8px 12px 14px; border-top: 0; gap: 4px; }
+.sb-foot::before { content: ""; display: block; height: 1px; margin: 0 4px 8px; background: var(--stroke); }
+.sb-foot .sb-btn:not(.sb-collapse):not(.live) { border: 0; background: transparent; justify-content: flex-start; height: 42px; padding: 0 12px; border-radius: 12px; font-size: 13.5px; font-weight: 600; gap: 12px; }
+.sb-foot .sb-btn:not(.sb-collapse):not(.live):hover { background: rgba(255, 255, 255, .06); }
+.sb-foot .sb-btn.live { justify-content: flex-start; height: 42px; padding: 0 12px; border-radius: 12px; border: 0; gap: 12px; font-size: 13.5px; }
+.sb-foot .sb-collapse { width: 42px; height: 42px; padding: 0; border-radius: 12px; justify-content: center; align-self: flex-start; }
+.sb-foot .sb-collapse .sb-lbl { display: none; }
+
+/* ── itens com submenu (linha vertical à esquerda, como no modelo) ── */
+.sb-item { position: relative; display: flex; flex-direction: column; }
+.lp-nav-n + .sb-chev { margin-left: 8px; }
+.sb-chev { margin-left: auto; width: 14px; height: 14px; flex: 0 0 14px; opacity: .6; transition: transform .2s ease; }
+.sb-item.open > .lp-nav-b .sb-chev, .sb-item.open > .tab-btn .sb-chev { transform: rotate(180deg); }
+.sb-sub { display: none; flex-direction: column; gap: 2px; margin: 2px 0 6px 22px; padding-left: 12px; border-left: 1.5px solid var(--stroke-hi); }
+.sb-item.open > .sb-sub { display: flex; }
+.sb-sub-b { display: flex; align-items: center; height: 34px; padding: 0 12px; border: 0; border-radius: 10px; background: transparent; color: var(--muted); font-weight: 600; font-size: 13px; font-family: inherit; text-align: left; cursor: pointer; white-space: nowrap; }
+.sb-sub-b:hover { background: rgba(255, 255, 255, .06); color: var(--text); }
+.sb-sub-b[aria-current="true"] { background: rgba(212, 175, 55, .14); color: var(--rail-hi); }
+.sb-sub-b:focus-visible { outline: 2px solid rgba(244, 215, 122, .6); outline-offset: 2px; }
+
+/* ── a barra superior: só o cartão sino + perfil (e a busca) ── */
+.topbar, .lp-top { height: 72px; padding: 12px clamp(16px, 2.2vw, 32px) 0; border-bottom: 0; background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.tb-account { display: inline-flex; align-items: center; gap: 2px; height: 48px; padding: 0 8px 0 4px; border-radius: 16px; border: 1px solid var(--stroke); background: var(--rail-bg); box-shadow: 0 8px 24px rgba(0, 0, 0, .28); }
+.tb-account .tb-ico, .tb-account .lp-bell { border: 0; background: transparent; }
+.tb-account .tb-ico:hover, .tb-account .lp-bell:hover, .tb-account .tb-ico[aria-expanded="true"], .tb-account .lp-bell[aria-expanded="true"] { background: rgba(255, 255, 255, .07); }
+.tb-sep { width: 1px; height: 24px; margin: 0 6px; background: var(--stroke-hi); }
+.tb-prof-w { position: relative; }
+.tb-prof { display: inline-flex; align-items: center; gap: 10px; height: 40px; padding: 0 4px 0 8px; border: 0; border-radius: 12px; background: transparent; color: var(--text); font-weight: 700; font-size: 13px; font-family: inherit; cursor: pointer; max-width: 240px; }
+.tb-prof:hover, .tb-prof[aria-expanded="true"] { background: rgba(255, 255, 255, .07); }
+.tb-prof-n { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tb-prof .tb-chev { width: 14px; height: 14px; flex: 0 0 14px; opacity: .65; transition: transform .2s ease; }
+.tb-prof[aria-expanded="true"] .tb-chev { transform: rotate(180deg); }
+.tb-av { flex: 0 0 34px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; overflow: hidden; font-size: 13px; font-weight: 800; background: var(--ac, #d4af37); color: var(--at, #1a1200); border: 1px solid var(--stroke-hi); }
+.tb-av img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tb-menu { position: absolute; right: 0; top: calc(100% + 12px); z-index: 450; min-width: 220px; padding: 8px; border-radius: 16px; border: 1px solid var(--stroke-hi); background: var(--panel2, #181818); box-shadow: 0 18px 50px rgba(0, 0, 0, .55); }
+.tb-menu[hidden] { display: none; }
+.tb-menu button, .tb-menu a { display: flex; align-items: center; gap: 12px; width: 100%; height: 42px; padding: 0 12px; border: 0; border-radius: 10px; background: transparent; color: var(--text); font-weight: 600; font-size: 13px; font-family: inherit; text-decoration: none; cursor: pointer; }
+.tb-menu button:hover, .tb-menu a:hover { background: rgba(255, 255, 255, .07); }
+.tb-menu svg { width: 18px; height: 18px; flex: 0 0 18px; opacity: .8; }
+.tb-menu .tb-sair { color: var(--bad, #ff8a80); }
+.tb-menu .tb-sair svg { opacity: 1; }
+.tb-prof:focus-visible, .tb-menu button:focus-visible, .tb-menu a:focus-visible { outline: 2px solid rgba(244, 215, 122, .6); outline-offset: 2px; }
+
+/* ── recolhida (só desktop): ícones, e o nome (ou o submenu) aparece ao lado quando o mouse passa ── */
+@media (min-width: 961px) {
+  .lp-shell.collapsed .lp-side, .app-shell.collapsed .sidebar { overflow: visible; }   /* os balões e o submenu saem da barra */
+  .lp-shell.collapsed .lp-nav, .lp-shell.collapsed .sb-nav { overflow: visible; }
+  .lp-shell.collapsed .sb-group, .app-shell.collapsed .sb-group { margin: 8px 6px; padding: 0; height: 1px; background: var(--stroke); font-size: 0; }
+  .lp-shell.collapsed .sb-foot .sb-btn:not(.sb-collapse), .app-shell.collapsed .sb-foot .sb-btn:not(.sb-collapse) { justify-content: center; padding: 0; }
+  .lp-shell.collapsed .sb-foot .sb-collapse, .app-shell.collapsed .sb-foot .sb-collapse { align-self: center; }
+  .lp-shell.collapsed .sb-chev, .app-shell.collapsed .sb-chev { display: none; }
+  .lp-shell.collapsed .sb-item > .sb-sub, .app-shell.collapsed .sb-item > .sb-sub { display: none; }
+  .lp-shell.collapsed .lp-nav-b:hover::after, .lp-shell.collapsed .lp-nav-b:focus-visible::after, .app-shell.collapsed .tab-btn:hover::after, .app-shell.collapsed .tab-btn:focus-visible::after,
+  .lp-shell.collapsed .sb-foot .sb-btn:hover::after, .app-shell.collapsed .sb-foot .sb-btn:hover::after {
+    content: attr(data-label); position: absolute; left: calc(100% + 14px); top: 50%; transform: translateY(-50%); z-index: 500; padding: 9px 14px; border-radius: 12px;
+    border: 1px solid var(--stroke-hi); background: var(--panel2, #181818); box-shadow: 0 12px 32px rgba(0, 0, 0, .5); color: var(--text); font-size: 13px; font-weight: 600; white-space: nowrap; pointer-events: none;
+  }
+  .lp-shell.collapsed .sb-foot .sb-btn, .app-shell.collapsed .sb-foot .sb-btn { position: relative; }
+  .lp-shell.collapsed .sb-item.tem-sub > .lp-nav-b:hover::after, .lp-shell.collapsed .sb-item.tem-sub > .lp-nav-b:focus-visible::after { display: none; }
+  .lp-shell.collapsed .sb-item.tem-sub:hover > .sb-sub, .lp-shell.collapsed .sb-item.tem-sub:focus-within > .sb-sub {
+    display: flex; position: absolute; left: calc(100% + 14px); top: 0; z-index: 500; min-width: 180px; margin: 0; padding: 8px; gap: 2px; border: 1px solid var(--stroke-hi); border-radius: 14px;
+    background: var(--panel2, #181818); box-shadow: 0 12px 32px rgba(0, 0, 0, .5);
+  }
+  .lp-shell.collapsed .sb-item.tem-sub:hover::before { content: ""; position: absolute; left: 100%; top: 0; width: 16px; height: 100%; }   /* ponte para o mouse alcançar o submenu */
+}
+
+/* ── menu deslizante (celular): o cartão volta a ser uma gaveta inteira ── */
+@media (max-width: 960px) {
+  .lp-side { margin: 0; top: 0; height: 100vh; height: 100dvh; border-radius: 0 22px 22px 0; border-left: 0; }
+  .lp-top { height: 60px; padding: 8px 14px 0; }
+  .tb-prof-n { display: none; }
+  .tb-prof { padding: 0 2px; }
+  .lp-nav-b { height: 44px; }   /* alvo de toque */
+}
+@media (max-width: 767px) {
+  .sidebar { margin: 0; top: 0; height: 100vh; height: 100dvh; border-radius: 0 22px 22px 0; border-left: 0; }
+  .topbar { height: 60px; padding: 8px 14px 0; }
+  .tab-btn { height: 44px; }
+}
+
+.lp-search-b, .tb-search { white-space: nowrap; flex-shrink: 0; }
+@media (max-width: 1439px) { .lp-search-b kbd, .tb-search kbd { display: none; } }
+
+/* a barra superior no desktop: o período à esquerda, sino + perfil à direita (sem sobrepor quando falta espaço) */
+@media (min-width: 961px) { .lp-top { grid-template-columns: auto minmax(0, 1fr) auto; } .lp-top .tb-center { justify-self: start; } }
+@media (min-width: 768px) { .topbar { grid-template-columns: auto minmax(0, 1fr) auto; } .topbar .tb-center { justify-self: start; } }

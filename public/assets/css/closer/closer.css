@@ -1,0 +1,135 @@
+/*
+ * Portal do Closer (closer.php): o que é só dele, por cima do shell e dos componentes do portal do líder (tokens, componentes, portal-lider, shell-admin e
+ * meu-portal). Meta com barra grossa e faixas de cor (verde >= 80%, amarelo 40 a 79%, vermelho < 40%), ranking, linha do tempo das interações, o
+ * botão flutuante com a folha do registro no celular e o tema claro (html[data-tema="claro"]).
+ */
+
+/* ── barra de progresso da meta e a % ── */
+.cp-bar { height: 22px; border-radius: 99px; background: var(--faint); overflow: hidden; }
+.cp-bar i { display: block; height: 100%; min-width: 4px; border-radius: 99px; background: linear-gradient(90deg, #6b6b6b, #9a9a9a); transition: width .6s var(--ease, ease); }
+.cp-bar.ok i { background: linear-gradient(90deg, #10b981, #34d399); }
+.cp-bar.mid i { background: linear-gradient(90deg, #d97706, #fbbf24); }
+.cp-bar.bad i { background: linear-gradient(90deg, #dc2626, #ff8a80); }
+.cp-pct { display: inline-block; padding: 1px 9px; border-radius: 99px; font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.cp-pct.ok { color: var(--ok); background: rgba(52, 211, 153, .14); }
+.cp-pct.mid { color: var(--warn); background: rgba(251, 191, 36, .14); }
+.cp-pct.bad { color: var(--bad); background: rgba(255, 138, 128, .14); }
+
+/* ── Meu dia: meta da semana (topo, em destaque) ── */
+.cp-meta { margin-bottom: 18px; }
+.cp-meta-per { margin: -6px 0 10px; font-size: 13px; color: var(--muted); }
+.cp-meta-l { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 8px; font-size: 15px; }
+.cp-meta-l b { font-size: 30px; font-weight: 900; letter-spacing: -.5px; font-variant-numeric: tabular-nums; }
+.cp-meta-l span:first-child { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); }
+.cp-meta-bar { margin-bottom: 10px; }
+.cp-meta-bar .cp-bar { height: 26px; }
+.cp-meta-txt { margin: 0; font-size: 15px; font-weight: 700; }
+.cp-ct-meta { margin: 4px 0 14px; }
+.cp-ct-meta .cp-meta-l b { font-size: 18px; }
+
+/* ── Meu dia: o registro ocupa a largura toda ── */
+.cp-g-rk { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; margin-top: 18px; }
+@media (max-width: 1100px) { .cp-g-rk { grid-template-columns: minmax(0, 1fr); } }
+.mp-sum { margin-bottom: 18px; }
+.cp-vazio { margin: 0; padding: 12px 0; font-size: 14px; color: var(--muted); }
+
+/* ── ranking: minha posição ── */
+.cp-rk { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.cp-rk-pos { font-size: 52px; font-weight: 900; line-height: 1; letter-spacing: -1.5px; color: var(--gold2); font-variant-numeric: tabular-nums; }
+.cp-rk-t { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 150px; }
+.cp-rk-t b { font-size: 16px; }
+.cp-rk-t span { font-size: 13px; color: var(--muted); }
+.cp-rk-m { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; font-size: 15px; }
+.cp-rk-var { margin: 10px 0 0; font-size: 13px; color: var(--muted); }
+.cp-rk-var small, .cp-rk-var .mp-trend { margin-left: 0; }
+.cp-rk-l { margin: 12px 0 0; }
+.cp-rk-lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.cp-rk-row { display: grid; grid-template-columns: 38px minmax(0, 1fr) auto auto; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--faint); background: rgba(255, 255, 255, .02); }
+.cp-rk-row.voce { border-color: var(--stroke-hi); background: rgba(212, 175, 55, .12); box-shadow: 0 0 0 1px rgba(212, 175, 55, .2); }
+.cp-rk-nm { min-width: 0; display: flex; flex-direction: column; gap: 2px; font-size: 14px; }
+.cp-rk-n2 { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.cp-rk-nm b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
+.cp-voce { display: inline-block; margin-left: 6px; padding: 0 7px; border-radius: 99px; background: var(--gold2); color: #1a1200; font-size: 10px; font-weight: 900; font-style: normal; letter-spacing: .5px; vertical-align: middle; }
+.cp-desemp { font-size: 11.5px; font-weight: 600; color: var(--gold2); }
+.cp-rk-v { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cp-rk-gap { text-align: center; color: var(--muted); letter-spacing: 4px; }
+
+/* ── Meu dia: últimas interações (prévia) ── */
+.cp-inter { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.cp-inter button { width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--faint); background: rgba(255, 255, 255, .02); color: inherit; text-align: left; font-size: 14px; cursor: pointer; }
+.cp-inter button:hover { border-color: var(--stroke-hi); background: rgba(212, 175, 55, .06); }
+.cp-inter time { flex: 0 0 auto; font-size: 12px; font-weight: 700; color: var(--gold2); font-variant-numeric: tabular-nums; }
+.cp-inter span { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cp-novo { flex: 0 0 auto; padding: 1px 8px; border-radius: 99px; background: var(--gold2); color: #1a1200; font-size: 10px; font-weight: 900; font-style: normal; letter-spacing: .5px; }
+.cp-ev-leg { display: flex; gap: 14px; align-items: center; margin-top: 8px; font-size: 12px; color: var(--muted); }
+.cp-ev-leg i { display: inline-block; width: 18px; height: 0; margin-right: 6px; border-top: 3px solid #fbbf24; vertical-align: middle; }
+.cp-ev-leg i.eq { border-top: 2px dashed #60a5fa; }
+
+/* ── Minhas ações ── */
+.lp-ac-dt { margin: 10px 0 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
+.lp-agrupar { display: inline-flex; align-items: center; gap: 8px; align-self: flex-end; min-height: 44px; font-size: 13px; font-weight: 600; cursor: pointer; }
+
+/* ── Minhas interações ── */
+.cp-abas { display: flex; flex-wrap: nowrap; overflow-x: auto; margin-bottom: 16px; max-width: 100%; }
+.cp-abas button { white-space: nowrap; }
+.cp-tab-n { display: inline-block; min-width: 18px; margin-left: 6px; padding: 0 6px; border-radius: 99px; background: var(--gold2); color: #1a1200; font-size: 11px; font-weight: 900; text-align: center; }
+.cp-timeline { list-style: none; margin: 0; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 12px; border-left: 2px solid var(--stroke); }
+.cp-int { position: relative; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--stroke); background: rgba(255, 255, 255, .02); }
+.cp-int::before { content: ""; position: absolute; left: -26px; top: 20px; width: 12px; height: 12px; border-radius: 50%; background: var(--panel); border: 2px solid var(--stroke-hi); }
+.cp-int.novo { border-color: var(--stroke-hi); background: rgba(212, 175, 55, .07); }
+.cp-int.novo::before { background: var(--gold2); border-color: var(--gold2); }
+.cp-int-h { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 0; border: 0; background: transparent; color: inherit; text-align: left; font-size: 15px; font-weight: 800; cursor: pointer; }
+.cp-int-t { min-width: 0; overflow-wrap: anywhere; }
+.cp-int-m { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin-top: 6px; font-size: 12.5px; color: var(--muted); }
+.cp-int-c { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--stroke); }
+.cp-int-x { margin: 0 0 12px; font-size: 14.5px; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+.cp-resp { margin: 0 0 10px; padding: 10px 12px; border-radius: 10px; background: rgba(96, 165, 250, .1); border: 1px solid rgba(96, 165, 250, .25); }
+.cp-resp small { color: var(--muted); font-weight: 600; }
+.cp-resp p { margin: 4px 0 0; font-size: 14px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.cp-resp-f { display: flex; flex-direction: column; gap: 6px; }
+.cp-resp-b { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+
+/* ── Configurações ── */
+.cp-perfil { display: grid; gap: 12px; margin: 0 0 12px; }
+.cp-perfil div { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--faint); }
+.cp-perfil dt { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
+.cp-perfil dd { margin: 0; font-weight: 700; text-align: right; }
+.cp-tema { margin-bottom: 8px; }
+
+
+/* ── botão flutuante (FAB) e a folha do registro no celular ── */
+.cp-fab { position: fixed; right: 22px; bottom: 22px; z-index: 40; display: inline-flex; align-items: center; gap: 10px; height: 56px; padding: 0 22px 0 18px; border: 0; border-radius: 99px; background: linear-gradient(135deg, #d4af37, #fbbf24); color: #1a1200; font-family: inherit; font-size: 14px; font-weight: 800; box-shadow: 0 10px 28px rgba(212, 175, 55, .4); cursor: pointer; transition: transform .18s ease, opacity .18s ease; }
+.cp-fab:hover { transform: translateY(-2px); }
+.cp-fab svg { width: 24px; height: 24px; }
+.cp-fab.cp-fab-off { opacity: 0; pointer-events: none; transform: scale(.9); }
+.cp-sheet-x { display: none; }
+@media (max-width: 768px) {
+  .cp-fab { right: 16px; bottom: 16px; width: 56px; padding: 0; justify-content: center; }
+  .cp-fab span { display: none; }
+  body.cp-sheet .cp-fab { display: none; }
+  body.cp-sheet #lpQuick { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; margin: 0; max-height: 88vh; overflow: auto; border-radius: 18px 18px 0 0; box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .55); padding-bottom: max(20px, env(safe-area-inset-bottom)); }
+  body.cp-sheet .cp-sheet-x { display: inline-flex; }
+  .cp-rk-row { grid-template-columns: 34px minmax(0, 1fr) auto; }
+  .cp-rk-v { display: none; }
+  .cp-meta-l b { font-size: 24px; }
+}
+
+/* ── tema claro ── */
+html[data-tema="claro"] { --bg: #f4efe3; --panel: #ffffff; --panel2: #faf6ea; --stroke: rgba(138, 106, 5, .22); --stroke-hi: rgba(138, 106, 5, .45); --gold: #8a6a05; --gold2: #7a5c04; --text: #1c1a14; --muted: #5c564a; --faint: rgba(0, 0, 0, .07); --ok: #047857; --warn: #b45309; --bad: #b91c1c; --lig: #1d4ed8; --fu: #6d28d9; --lq: #c2410c; }
+html[data-tema="claro"] body.lp { background: #f4efe3; color: var(--text); }
+html[data-tema="claro"] .lp-side { background: #fffdf7; }
+html[data-tema="claro"] .topbar, html[data-tema="claro"] .lp-top { background: rgba(255, 253, 247, .94); }
+html[data-tema="claro"] .ld, html[data-tema="claro"] #ldHost { --ld-solid: #ffffff; --ld-surface: rgba(0, 0, 0, .03); --ld-surface-2: rgba(0, 0, 0, .06); --ld-field: #ffffff; --ld-gold: #7a5c04; --ld-on-gold: #ffffff; --ld-ok: #047857; --ld-bad: #b91c1c; --ld-warn: #b45309; }
+html[data-tema="claro"] .lp-in, html[data-tema="claro"] .ld-in { background: #fff; color: var(--text); border-color: var(--stroke-hi); }
+html[data-tema="claro"] .lp-in::placeholder { color: rgba(0, 0, 0, .38); }
+html[data-tema="claro"] .mp-ev-txt, html[data-tema="claro"] .mp-ev-txt b { color: var(--text); }
+html[data-tema="claro"] .mp-sum-c, html[data-tema="claro"] .lp-card, html[data-tema="claro"] .cp-int, html[data-tema="claro"] .cp-inter button, html[data-tema="claro"] .cp-rk-row { background: var(--panel); }
+html[data-tema="claro"] .cp-rk-row.voce, html[data-tema="claro"] .cp-int.novo { background: #fbf1cf; }
+html[data-tema="claro"] .cp-voce, html[data-tema="claro"] .cp-tab-n, html[data-tema="claro"] .cp-novo, html[data-tema="claro"] .cp-fab { color: #fff; background: #8a6a05; }
+html[data-tema="claro"] .cp-fab { background: linear-gradient(135deg, #8a6a05, #b8860b); }
+html[data-tema="claro"] .cp-resp { background: rgba(29, 78, 216, .08); border-color: rgba(29, 78, 216, .25); }
+html[data-tema="claro"] .mp-svg text, html[data-tema="claro"] .mp-ct-chart text { fill: #444; }
+html[data-tema="claro"] .lp-nav-b { color: var(--muted); }
+html[data-tema="claro"] .lp-nav-b[aria-current="page"] { color: var(--gold2); background: rgba(138, 106, 5, .12); }
+html[data-tema="claro"] .lp-qtb { color: var(--text); }
+html[data-tema="claro"] .lp-qtb:hover:not(:disabled) { background: color-mix(in srgb, var(--c) 18%, #fff); }
